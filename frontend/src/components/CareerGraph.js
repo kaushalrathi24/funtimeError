@@ -1,46 +1,36 @@
 'use client';
-import React, { useEffect, useState, useCallback } from 'react';
-import ReactFlow, { applyEdgeChanges, applyNodeChanges } from 'reactflow';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import ReactFlow, {
+  applyEdgeChanges,
+  applyNodeChanges,
+  addEdge,
+  Controls,
+  Background,
+  MiniMap,
+} from 'reactflow';
 import 'reactflow/dist/style.css';
 import { structureData } from '@/scripts/structureData';
-
-const initialNodes = [
-  {
-    id: '1',
-    type: 'input',
-    data: { label: 'Input Node' },
-    position: { x: 250, y: 25 },
-  },
-
-  {
-    id: '2',
-    // you can also pass a React component as a label
-    data: { label: <div>Default Node</div> },
-    position: { x: 100, y: 125 },
-  },
-  {
-    id: '3',
-    type: 'output',
-    data: { label: 'Output Node' },
-    position: { x: 250, y: 250 },
-  },
-];
-
-const initialEdges = [
-  { id: 'e1-2', source: '1', target: '2' },
-  { id: 'e1-3', source: '1', target: '3', animated: true },
-];
+import CustomNode from './CustomNode';
 
 function CareerGraph({ data }) {
-  const [nodes, setNodes] = useState(initialNodes);
-  const [edges, setEdges] = useState(initialEdges);
+  const [nodes, setNodes] = useState([]);
+  const [edges, setEdges] = useState([]);
+
+  const nodeTypes = useMemo(() => ({ customNode: CustomNode }), []);
 
   useEffect(() => {
     let n = [];
     let e = [];
     structureData(data, null, null, n, e);
+    n.push({
+      id: 'node-1',
+      type: 'customNode',
+      image: '/laptop.png',
+      position: { x: 50, y: -200 },
+    });
     setNodes(n);
     setEdges(e);
+    console.log(n, e);
   }, []);
 
   const onNodesChange = useCallback(
@@ -51,16 +41,27 @@ function CareerGraph({ data }) {
     (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
     [setEdges]
   );
+  const onConnect = useCallback(
+    (params) => setEdges((eds) => addEdge(params, eds)),
+    []
+  );
 
   return (
-    <div className="h-[35rem] bg-black w-screen">
+    <div className="h-screen bg-white w-full">
       <ReactFlow
+        nodeTypes={nodeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
+        onConnect={onConnect}
         nodes={nodes}
         edges={edges}
-        fitView
-      />
+        fitView={true}
+        proOptions={{ hideAttribution: true }}
+      >
+        <Background />
+        <Controls className="!m-12" />
+        <MiniMap className="!m-12" zoomable pannable />
+      </ReactFlow>
     </div>
   );
 }
