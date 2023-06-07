@@ -8,7 +8,7 @@ def converter(filename):
     # importing required modules
     from pypdf import PdfReader
 
-    file = rf"/home/<username>/{filename}.pdf"
+    file = rf"/home/<username>/{filename}"
     # creating a pdf reader object
     reader = PdfReader(file)
 
@@ -25,7 +25,16 @@ def converter(filename):
 
     # print(text)
     return text
-	
+
+# @app.route("/test")
+# def test():
+#     return "Hello World!"
+
+# @app.route("/upload/<string:file>")
+# def upload(file):
+#     request.files['file'].save(file)
+#     return "File uploaded successfully"
+
 if __name__ == "__main__":
 	app.run(debug=True)
 
