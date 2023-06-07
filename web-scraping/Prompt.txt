@@ -19,36 +19,11 @@ You have to give an output in the following JSON format:
 "skills": [ "<Skill 1>", "<Skill 2>", "<Skill 3>", ... ]
 }```
 
-A Category is a very high-level classification that a professional position falls under. Simply put, a Category is a generalization of a career path and is related to the area of study that the position falls under. It is a multi-layered abstraction and generalization of a job description.
-(For example:
-Positions - Category
-Web Developer, Software Developer, ML Engineer, Malware Developer - Technical
-UI/UX Designer, Illustrator, Poster Design - Visual Design
-School Teacher, Teaching Assistant, Undergraduate Student - Education
-College Professor, PhD Student, IEEE Standards Developer - Research
-Search Engine Optimization Engineer, Social Media Manager, Public Relations Manager - Marketing
-HR Manager, CTO, CEO, Team Leader - Management
-and so on and so forth.)
+Create a list of job positions that a person with the given profile will be able to transition into. 
+The criteria for such a job position are that there needs to be at least a 15% intersection between the skills required for that job position and the skills that the person currently has.
+This is a strict requirement: You need to think of at least 15 different job positions, with minimal overlap between them.
 
-The methodology to find a Category is to condense and combine any potential Categories that have any overlap of areas of study between them into a single category that falls under a unified area of study. This procedure should be repeated until there is less than 2% overlap between them. 
-This is a strict requirement: You need to generate only 3 different Categories like this.
+Then please categorize those job positions into relevant categories based on their industry domains, required skill sets, levels of responsibility, and similarities and characteristics.
+
+This is a strict requirement: You need to generate only 3 different Categories.
 This is a strict requirement: A potential job position should NOT be reachable by starting off from two different Categories.
-
-
-------------------------------------------------------------------------------------------------------------------
-
-The process you are referring to is known as job categorization or job classification. It involves grouping or categorizing job positions based on common characteristics such as job functions, skills required, or industry domains.
-
-To prompt ChatGPT to perform job categorization for a set of job positions, you can use the following instruction:
-
-"Please categorize the following job positions into relevant categories based on their similarities and characteristics: [list the job positions here]."
-
-Alternatively, if you want to provide more specific instructions, you can ask ChatGPT to categorize the jobs based on certain criteria or dimensions, such as industry, skill set, or level of responsibility. For example:
-
-"Please categorize the following job positions into relevant categories based on their industry domains: [list the job positions here]."
-
-"Please categorize the following job positions into relevant categories based on the required skill sets: [list the job positions here]."
-
-"Please categorize the following job positions into relevant categories based on their level of responsibility: [list the job positions here]."
-
-By providing clear instructions and specifying the criteria or dimensions you want to focus on, you can guide ChatGPT in effectively categorizing the job positions.
