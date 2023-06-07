@@ -4,11 +4,15 @@ Your input will be data in text format, a copy of all the text in their resume
 
 Create a list of job positions that a person with the given profile will be able to transition into. 
 The criteria for such a job position are that there needs to be at most a 15% intersection between the skills required for that job position and the skills that the person currently has.
-This is a strict requirement: You need to list at least 25 different job positions, with minimal overlap between them.
+List jobs that don't fall under the same logical and technical domains.
+This is a strict requirement: You need to list at least 35 different job positions, with minimal overlap between them.
+This is a strict requirement: The scope and domain of the jobs has to be limited to <insert scope and domains here> Roles
 
 ------------------------------------------------------------------------------------------------------------------
 
-Using the information in your previous response and the data provided to you before, please categorize those job positions into relevant categories based on their industry domains, required skill sets, levels of responsibility, and similarities and characteristics.
+Using the information in your previous response and the data provided to you before, please categorize those job positions into relevant categories.
+Use one or more of the following criteria to categorize the job positions:
+logical and industrial domains, required skill sets, levels of responsibility, and similarities and characteristics.
 
 You have to give an output in the following JSON format:
 ```JSON
@@ -27,7 +31,6 @@ You have to give an output in the following JSON format:
 "skills": [ "<Skill 1>", "<Skill 2>", "<Skill 3>", ... ]
 }```
 
-
-
 This is a strict requirement: You need to generate only 3 different Categories.
-This is a strict requirement: A potential job position should NOT be reachable by starting off from two different Categories.
+This is a strict requirement: You need to generate at most 7 different Skills.
+------------------------------------------------------------------------------------------------------------------
