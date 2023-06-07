@@ -1,7 +1,8 @@
 'use client';
-import React, { useState } from 'react';
-import ReactFlow from 'reactflow';
+import React, { useEffect, useState, useCallback } from 'react';
+import ReactFlow, { applyEdgeChanges, applyNodeChanges } from 'reactflow';
 import 'reactflow/dist/style.css';
+import { structureData } from '@/scripts/structureData';
 
 const initialNodes = [
   {
@@ -27,16 +28,39 @@ const initialNodes = [
 
 const initialEdges = [
   { id: 'e1-2', source: '1', target: '2' },
-  { id: 'e2-3', source: '2', target: '3', animated: true },
+  { id: 'e1-3', source: '1', target: '3', animated: true },
 ];
 
 function CareerGraph({ data }) {
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
 
+  useEffect(() => {
+    let n = [];
+    let e = [];
+    structureData(data, null, null, n, e);
+    setNodes(n);
+    setEdges(e);
+  }, []);
+
+  const onNodesChange = useCallback(
+    (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
+    [setNodes]
+  );
+  const onEdgesChange = useCallback(
+    (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
+    [setEdges]
+  );
+
   return (
-    <div className="h-32 w-32">
-      <ReactFlow nodes={nodes} edges={edges} fitView />
+    <div className="h-[35rem] bg-black w-screen">
+      <ReactFlow
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        nodes={nodes}
+        edges={edges}
+        fitView
+      />
     </div>
   );
 }
