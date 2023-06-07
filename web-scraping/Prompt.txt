@@ -1,0 +1,25 @@
+I am going to give you some information about a candidate in an ATS. Tell me what career domains are possible because of which skills, all in a highly structured manner.
+
+Your input will be data in text format, a copy of all the text in their resume
+
+You have to give an output in the following JSON format:
+```JSON
+{
+"name":"<CandidateName>",
+"designation":"<Designation>",
+"nodes": [ {
+    "title":"<Category 1>"
+}, 
+{
+    "title":"<Category 2>"
+}, 
+{
+    "title":<Category 3>"
+} ],
+"skills": [ "<Skill 1>", "<Skill 2>", "<Skill 3>", ... ]
+}```
+
+By Category, I mean a generic classification of the area that a possible career can fall under. It is a very abstract and generic path and has the potential to be further subdivided into more classifications. A Category can be thought of as an Industry that a career path falls under.
+The methodology to find a Category is to condense and combine any choices that have any overlap between them into a single category.
+If there are any overlaps between two potential Categories, they should be combined into a single Category and this procedure should be repeated until there is less than 1% overlap between 3 categories.
+This is a strict requirement: A job position should NOT be reachable by starting off from two different Categories.

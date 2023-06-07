@@ -19,7 +19,7 @@ def converter(filename):
 
     for i in range(len(reader.pages)):
         # getting a specific page from the pdf file
-        page = reader.pages[0]
+        page = reader.pages[i]
         # extracting text from page
         text += page.extract_text()
 
