@@ -3,3 +3,9 @@ backend/node_modules
 backend/.env
 
 #Frontend
+
+
+# Resume Parsing
+
+/web-scraping/linkedin-pdf-parsing/*
+/web-scraping/__pycache__/*
