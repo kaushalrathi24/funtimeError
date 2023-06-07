@@ -30,10 +30,9 @@ app = Flask(__name__)
 # Pass the required route to the decorator.
 @app.route("/converter/<string:filename>")
 def converter(filename):
-
     return pdf2txt(filename)
 
-# @app.route('/allow/<int:Number>')
+# @app.route('/allow/<int:Number>', methods=['GET', 'POST'])
 # def allow(Number):
 #     if Number < 25:
 #         return f'You have been allowed to enter because\
