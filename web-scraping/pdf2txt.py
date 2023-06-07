@@ -1,8 +1,7 @@
-
 # importing required modules
-from PyPDF2 import PdfReader
+from pypdf import PdfReader
 
-file = r"/home/saharsh/Desktop/Resumes/Saharsh's Resume v1.5.pdf"
+file = r"/path/to/pdf/file.pdf"
 # creating a pdf reader object
 reader = PdfReader(file)
   
