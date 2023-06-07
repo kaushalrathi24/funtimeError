@@ -1,0 +1,30 @@
+I am going to give you some information about a candidate in an ATS. Tell me what career domains are possible because of which skills, all in a highly structured manner.
+
+Your input will be data in text format, a copy of all the text in their resume
+
+You have to give an output in the following JSON format:
+```JSON
+{
+"name":"<CandidateName>",
+"designation":"<Designation>",
+"nodes": [ {
+    "title":"<Category 1>"
+}, 
+{
+    "title":"<Category 2>"
+}, 
+{
+    "title":<Category 3>"
+} ],
+"skills": [ "<Skill 1>", "<Skill 2>", "<Skill 3>", ... ]
+}```
+
+Create a list of job positions that a person with the given profile will be able to transition into. 
+The criteria for such a job position are that there needs to be at least a 15% intersection between the skills required for that job position and the skills that the person currently has.
+This is a strict requirement: The domain of the job position should be strictly be relevant to : <insert domain name here>. 
+This is a strict requirement: You need to think of at least 15 different job positions, with minimal overlap between them.
+
+Then please categorize those job positions into relevant categories based on their industry domains, required skill sets, levels of responsibility, and similarities and characteristics.
+
+This is a strict requirement: You need to generate only 3 different Categories.
+This is a strict requirement: A potential job position should NOT be reachable by starting off from two different Categories.

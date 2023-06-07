@@ -32,21 +32,38 @@ export const structureData = (root, prev, ith, nodes, edges) => {
     after all recursions.
   `;
 
-  // console.log(root, prev, ith, nodes, edges);
+  console.log(root, prev, ith, nodes, edges);
 
   const id = nanoid(); // current root node id
   let position;
+  let parentNode = null;
   if (!prev) {
     position = { x: 0, y: 0 }; // initial node with person name
   } else {
+    parentNode = prev.id; // parent node
+    // position = {
+    //   x: prev.position.x + 200,
+    //   y: prev.position.y + (ith - 1) * 100,
+    // };
     position = {
-      x: prev.position.x + 200,
-      y: prev.position.y + (ith - 1) * 100,
-    }; // new nodes to the right of parent by default.
+      // relative to parent node
+      x: 200,
+      y: (ith - 1) * 100,
+    };
   }
   const label = root.title;
 
-  let rootNode = { id, position, data: { label } }; // transforming root to rep for graph
+  // console.log(`Parent for ${root.title}: ${parentNode}`);
+
+  // creating a node in the graph
+  let rootNode = {
+    id,
+    position,
+    data: { label },
+    parentNode,
+    sourcePosition: 'right',
+    targetPosition: 'left',
+  }; // transforming root to rep for graph
   nodes.push(rootNode); // rendering current root node
 
   // need to build edges from root to children
