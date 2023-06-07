@@ -33,3 +33,22 @@ and so on and so forth.)
 The methodology to find a Category is to condense and combine any potential Categories that have any overlap of areas of study between them into a single category that falls under a unified area of study. This procedure should be repeated until there is less than 2% overlap between them. 
 This is a strict requirement: You need to generate only 3 different Categories like this.
 This is a strict requirement: A potential job position should NOT be reachable by starting off from two different Categories.
+
+
+------------------------------------------------------------------------------------------------------------------
+
+The process you are referring to is known as job categorization or job classification. It involves grouping or categorizing job positions based on common characteristics such as job functions, skills required, or industry domains.
+
+To prompt ChatGPT to perform job categorization for a set of job positions, you can use the following instruction:
+
+"Please categorize the following job positions into relevant categories based on their similarities and characteristics: [list the job positions here]."
+
+Alternatively, if you want to provide more specific instructions, you can ask ChatGPT to categorize the jobs based on certain criteria or dimensions, such as industry, skill set, or level of responsibility. For example:
+
+"Please categorize the following job positions into relevant categories based on their industry domains: [list the job positions here]."
+
+"Please categorize the following job positions into relevant categories based on the required skill sets: [list the job positions here]."
+
+"Please categorize the following job positions into relevant categories based on their level of responsibility: [list the job positions here]."
+
+By providing clear instructions and specifying the criteria or dimensions you want to focus on, you can guide ChatGPT in effectively categorizing the job positions.
