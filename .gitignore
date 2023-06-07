@@ -8,3 +8,4 @@ backend/.env
 # Resume Parsing
 
 /web-scraping/linkedin-pdf-parsing/*
+/web-scraping/__pycache__/*
