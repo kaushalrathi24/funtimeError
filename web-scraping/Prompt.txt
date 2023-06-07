@@ -19,9 +19,17 @@ You have to give an output in the following JSON format:
 "skills": [ "<Skill 1>", "<Skill 2>", "<Skill 3>", ... ]
 }```
 
-A Category can be thought of as an Industry that a career path falls under.
-The methodology to find a Category is to condense and combine any potential Categories that have any overlap between them into a single category.
-If there are any overlaps between potential Categories, they should be combined into a single Category and this procedure should be repeated until there is less than 2% overlap between them. The Categories should be completely independent of each other and should belong to different industries with respect to professional occupations. 
-(For example, Technical Content Creation, Software Development, and IT Legal Advisor are 3 completely independent categories - These 3 jobs can be classified into 3 different categories: Creative/Educative, Engineering, and Legal)
+A Category is a very high-level classification that a professional position falls under. Simply put, a Category is a generalization of a career path and is related to the area of study that the position falls under. It is a multi-layered abstraction and generalization of a job description.
+(For example:
+Positions - Category
+Web Developer, Software Developer, ML Engineer, Malware Developer - Technical
+UI/UX Designer, Illustrator, Poster Design - Visual Design
+School Teacher, Teaching Assistant, Undergraduate Student - Education
+College Professor, PhD Student, IEEE Standards Developer - Research
+Search Engine Optimization Engineer, Social Media Manager, Public Relations Manager - Marketing
+HR Manager, CTO, CEO, Team Leader - Management
+and so on and so forth.)
+
+The methodology to find a Category is to condense and combine any potential Categories that have any overlap of areas of study between them into a single category that falls under a unified area of study. This procedure should be repeated until there is less than 2% overlap between them. 
 This is a strict requirement: You need to generate only 3 different Categories like this.
 This is a strict requirement: A potential job position should NOT be reachable by starting off from two different Categories.
