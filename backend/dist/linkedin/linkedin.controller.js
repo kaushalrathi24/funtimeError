@@ -14,34 +14,44 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LinkedinController = void 0;
 const common_1 = require("@nestjs/common");
-const linkedinUrl_dto_1 = require("./dto/linkedinUrl.dto");
 const linkedin_service_1 = require("./linkedin.service");
 const newNode_dto_1 = require("./dto/newNode.dto");
+const platform_express_1 = require("@nestjs/platform-express");
+const multer_1 = require("multer");
 let LinkedinController = exports.LinkedinController = class LinkedinController {
     constructor(linkedinService) {
         this.linkedinService = linkedinService;
     }
-    async getLinkedinUrl(linkedinUrlDto) {
-        return await this.linkedinService.handleLinkedinUrl(linkedinUrlDto.url);
+    async uploadFile(file) {
+        return await this.linkedinService.getInitialNode(file.filename);
     }
-    async getNewNodes(newNodeDto) {
-        return await this.linkedinService.generateNewNode(newNodeDto);
+    async getSecondNodes(newNodeDto) {
+        return await this.linkedinService.generateSecondNodes(newNodeDto);
     }
 };
 __decorate([
-    (0, common_1.Post)('url'),
-    __param(0, (0, common_1.Body)()),
+    (0, common_1.Post)('upload'),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file', {
+        storage: (0, multer_1.diskStorage)({
+            destination: './upload',
+            filename: (req, file, cb) => {
+                const fileName = `${file.originalname}`;
+                cb(null, fileName);
+            },
+        }),
+    })),
+    __param(0, (0, common_1.UploadedFile)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [linkedinUrl_dto_1.LinkedinUrlDto]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], LinkedinController.prototype, "getLinkedinUrl", null);
+], LinkedinController.prototype, "uploadFile", null);
 __decorate([
-    (0, common_1.Post)('newNode'),
+    (0, common_1.Post)('secondNodes'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [newNode_dto_1.NewNodeDto]),
     __metadata("design:returntype", Promise)
-], LinkedinController.prototype, "getNewNodes", null);
+], LinkedinController.prototype, "getSecondNodes", null);
 exports.LinkedinController = LinkedinController = __decorate([
     (0, common_1.Controller)('linkedin'),
     __metadata("design:paramtypes", [linkedin_service_1.LinkedinService])

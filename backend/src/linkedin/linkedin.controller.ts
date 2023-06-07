@@ -1,19 +1,37 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { LinkedinUrlDto } from './dto/linkedinUrl.dto';
+import {
+  Body,
+  Controller,
+  Post,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { LinkedinService } from './linkedin.service';
 import { NewNodeDto } from './dto/newNode.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 
 @Controller('linkedin')
 export class LinkedinController {
   constructor(private readonly linkedinService: LinkedinService) {}
 
-  @Post('url')
-  async getLinkedinUrl(@Body() linkedinUrlDto: LinkedinUrlDto) {
-    return await this.linkedinService.handleLinkedinUrl(linkedinUrlDto.url);
+  @Post('upload')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './upload',
+        filename: (req, file, cb) => {
+          const fileName = `${file.originalname}`;
+          cb(null, fileName);
+        },
+      }),
+    }),
+  )
+  async uploadFile(@UploadedFile() file: Express.Multer.File) {
+    return await this.linkedinService.getInitialNode(file.filename);
   }
 
-  @Post('newNode')
-  async getNewNodes(@Body() newNodeDto: NewNodeDto) {
-    return await this.linkedinService.generateNewNode(newNodeDto);
+  @Post('secondNodes')
+  async getSecondNodes(@Body() newNodeDto: NewNodeDto) {
+    return await this.linkedinService.generateSecondNodes(newNodeDto);
   }
 }

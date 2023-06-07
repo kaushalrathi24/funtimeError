@@ -1,9 +1,11 @@
-import { LinkedinUrlDto } from './dto/linkedinUrl.dto';
+/// <reference types="multer" />
 import { LinkedinService } from './linkedin.service';
 import { NewNodeDto } from './dto/newNode.dto';
 export declare class LinkedinController {
     private readonly linkedinService;
     constructor(linkedinService: LinkedinService);
-    getLinkedinUrl(linkedinUrlDto: LinkedinUrlDto): Promise<string>;
-    getNewNodes(newNodeDto: NewNodeDto): Promise<string>;
+    uploadFile(file: Express.Multer.File): Promise<{
+        sessionId: string;
+    }>;
+    getSecondNodes(newNodeDto: NewNodeDto): Promise<string>;
 }

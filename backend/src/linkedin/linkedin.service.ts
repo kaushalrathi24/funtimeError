@@ -5,6 +5,7 @@ import { uuid } from 'uuidv4';
 import { GptService } from 'src/gpt/gpt.service';
 import { NewNodeDto } from './dto/newNode.dto';
 import { MessageInterface } from 'src/gpt/interfaces';
+import axios from 'axios';
 
 @Injectable()
 export class LinkedinService {
@@ -13,73 +14,73 @@ export class LinkedinService {
     @Inject(GptService) private gptService: GptService,
   ) {}
 
-  async handleLinkedinUrl(url: string) {
-    const sessionId = uuid();
-    // const response = await fetch('http://localhost:5000/linkedinUrl', {
-    //   method: 'POST',
-    //   body: url,
-    // });
-    // const data = await response.json();
-    const data = `About: I am Harsh Avinash, a computer science engineer with a specialization in data science, I've handled roles of product management and have a reputation of delivering quality work on time. I'm best seen in roles of leadership and have a history of handling responsibility well. 
-I'm competitive, curious and humbled to see what the world has to offer, looking forward to new and exciting opportunities.
+  async generateSecondNodes(newNodeDto: NewNodeDto) {
+    const { sessionId, node } = newNodeDto;
+    const messages = (await this.cacheManager.get(
+      sessionId,
+    )) as MessageInterface[];
+    const newMessage = `This is a strict requirement: The scope and domain of the jobs have to be limited to ${node} Domain.
+Using the information in your previous response and the data provided to you before, please categorize those job positions into relevant categories.
+Use one or more of the following criteria to categorize the job positions:
+logical and industrial domains, required skill sets, levels of responsibility, and similarities and characteristics.
 
-Experience:
+You have to give an output in the following JSON format:
 
-Research Fellow
-Indian Institute of Technology, Delhi · Internship
+{
+"name":"<CandidateName>",
+"designation":"<Designation>",
+"nodes": [ {
+    "title":"<Category 1>"
+}, 
+{
+    "title":"<Category 2>"
+}, 
+{
+    "title":<Category 3>"
+},
+{
+    "title":<Category 4>"
+} ]
+}
 
-ACM-VIT Chapter
-Chairperson
-
-Frontend Developer and Designer
-Procial
-
-Product Manager and Data Analyst
-Cypherock
-
-
-EDUCATION:
-
-Vellore Institute of Technology
-B. Tech Data Science
-
-
-SKILLS:
-React
-LLM
-Machine Learning
-Solidity
-Rust
-Next
-AWS
-Docker
-Deep Learning
-Tensorflow
-Leadership`;
-    const messages = [
-      {
-        role: 'user',
-        content:
-          'I am going to give you some information about a candidate in an ATS. Tell me what career paths are possible because of which skills, which skills need to be worked on for certain paths, all in a highly structured manner.',
-      },
-      { role: 'user', content: data },
-    ];
-    await this.cacheManager.set(sessionId, messages);
+This is a strict requirement: You need to generate only 4 different Categories.`;
+    console.log(typeof messages);
+    console.log(messages);
+    messages.push({ role: 'user', content: newMessage });
+    console.log(messages);
     const reply = await this.gptService.getGptResponse(messages);
     console.log(reply);
     messages.push({ role: 'assistant', content: reply });
+    await this.cacheManager.set(sessionId, messages);
     return reply;
   }
 
-  async generateNewNode(newNodeDto: NewNodeDto) {
-    const { sessionId, node } = newNodeDto;
-    const messages = Array<MessageInterface>(
-      await this.cacheManager.get(sessionId),
+  async getInitialNode(filename: string) {
+    console.log(filename);
+    const resume = await axios.get(
+      `https://3062-136-233-9-98.ngrok-free.app/converter/${filename}`,
     );
-    const newMessage = `Can i get roles in the  ${node} domain?`;
-    messages.push({ role: 'user', content: newMessage });
+    const messages = [
+      {
+        role: 'user',
+        content: `I am going to give you some information about a candidate in an ATS. Tell me what career domains are possible because of which skills, all in a highly structured manner.
+
+Your input will be data in text format, a copy of all the text in their resume
+
+Create a list of job positions that a person with the given profile will be able to transition into. 
+The criteria for such a job position are that there needs to be at most a 15% intersection between the skills required for that job position and the skills that the person currently has.
+List jobs that don't fall under the same logical and technical domains.
+This is a strict requirement: You need to list at least 15 different job positions, with minimal overlap between them.`,
+      },
+      { role: 'user', content: resume.data },
+    ];
+    const sessionId = uuid();
+    console.log(messages);
     const reply = await this.gptService.getGptResponse(messages);
-    console.log(reply);
-    return reply;
+    messages.push({ role: 'assistant', content: reply });
+    console.log(messages);
+    await this.cacheManager.set(sessionId, messages);
+    console.log((await this.cacheManager.get(sessionId))[0]);
+    return { sessionId };
   }
 }

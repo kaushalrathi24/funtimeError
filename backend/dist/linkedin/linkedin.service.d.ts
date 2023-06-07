@@ -5,6 +5,8 @@ export declare class LinkedinService {
     private cacheManager;
     private gptService;
     constructor(cacheManager: Cache, gptService: GptService);
-    handleLinkedinUrl(url: string): Promise<string>;
-    generateNewNode(newNodeDto: NewNodeDto): Promise<string>;
+    generateSecondNodes(newNodeDto: NewNodeDto): Promise<string>;
+    getInitialNode(filename: string): Promise<{
+        sessionId: string;
+    }>;
 }
