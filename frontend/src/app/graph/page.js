@@ -194,6 +194,7 @@ export default function Home() {
 
   useOnSelectionChange({
     onChange: ({ nodes, edges }) => {
+      setTimeline('');
       console.log('changed selection', nodes, edges);
       if (nodes && nodes[0]) {
         if (nodes[0].data) {
@@ -265,7 +266,7 @@ export default function Home() {
       </div>
       <div
         className={`relative transition-all linear duration-400 ${
-          sidebar ? 'grow' : 'w-0'
+          sidebar ? 'grow max-w-2xl' : 'w-0'
         }`}
       >
         <div
@@ -314,7 +315,7 @@ export default function Home() {
                   >
                     Generate a plan for me.
                   </p>
-                  <p className="mt-10"></p>
+                  <p className="mt-10 whitespace-pre-line">{timeline}</p>
                 </div>
               )}
             </div>

@@ -74,7 +74,7 @@ export default function Home() {
         </div>
       </div>
       <div className="absolute bottom-0"></div>
-      <div className="m-auto flex flex-col items-center">
+      <div className="m-auto flex flex-col bg-white shadow-md shadow-slate-600 p-10 rounded-lg items-center">
         <label for="file" class="drop-container">
           <span class="drop-title">Drop files here</span>
           or
