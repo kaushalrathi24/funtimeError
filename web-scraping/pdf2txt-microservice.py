@@ -1,7 +1,7 @@
 from flask import Flask
 from pypdf import PdfReader
 
-storage_dir = r"/home/saharsh/Desktop/funtimeError/web-scraping"
+storage_dir = r"/root/funtimeError/backend/upload"
 
 def pdf2txt(filename):
     # importing required modules
