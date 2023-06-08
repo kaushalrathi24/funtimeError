@@ -6,15 +6,15 @@ function CustomNode({ image }) {
   console.log(image);
   return (
     <>
-      <Handle type="target" position={Position.Top} />
-      <Image width={50} height={50} src={'/laptop.png'} />
-      <Handle type="source" position={Position.Bottom} id="a" />
-      <Handle
+      {/* <Handle type="target" position={Position.Left} /> */}
+      <Image width={100} height={100} src={'/careerNode_alt.png'} />
+      {/* <Handle type="source" position={Position.Bottom} id="a" /> */}
+      {/* <Handle
         type="source"
-        position={Position.Bottom}
+        position={Position.Right}
         id="b"
         style={handleStyle}
-      />
+      /> */}
     </>
   );
 }
