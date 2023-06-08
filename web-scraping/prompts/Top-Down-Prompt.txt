@@ -1,0 +1,21 @@
+Hello!
+I am going to provide you with a resume. 
+Can you please list a few sub-classifications that contain job roles that I can transition to, based on the skills and qualifications listed in my resume, such that fall under these 5 main classifications:
+
+Top Level Classification:
+Technical
+Managerial
+Creative Arts
+Research
+Humanatarian Sciences
+
+This is a strict requirement: DO NOT list any Job Roles or Professional Positions on their own. Each classification should be a category of its own.
+This is a strict requirement: DO NOT list any Job Roles or Professional Positions on their own. Each classification should be a category of its own.
+This is a strict requirement: DO NOT list any Job Roles or Professional Positions on their own. Each classification should be a category of its own.
+This is a strict requirement: The results must be based on the resume provided.
+Generate 15 sub-classifications each for the 5 main classification levels.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
