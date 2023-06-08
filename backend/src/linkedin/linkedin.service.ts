@@ -58,7 +58,7 @@ This is a strict requirement: You need to generate only 4 different Categories.`
   async getInitialNode(filename: string) {
     console.log(filename);
     const resume = await axios.get(
-      `https://9696-136-233-9-98.ngrok-free.app/converter/${filename}`,
+      `http://localhost:5000/converter/${filename}`,
     );
     const messages = [
       {
@@ -86,12 +86,14 @@ This is a strict requirement: You need to list at least 15 different job positio
 
   async getResources(getResourcesDto: GetResourcesDto) {
     const { start, end } = getResourcesDto;
-    const messages = [{
-      role: 'user',
-      content: `I am currently a ${start} but want to switch to a ${end} Role. What are some courses/resources links that i can use to learn the necessary skills to switch. Give me the course links in a json array format.
+    const messages = [
+      {
+        role: 'user',
+        content: `I am currently a ${start} but want to switch to a ${end} Role. What are some courses/resources links that i can use to learn the necessary skills to switch. Give me the course links in a json array format.
       Example: 
 ["link1", "link2", "link3"]`,
-    }];
+      },
+    ];
     const reply = await this.gptService.getGptResponse(messages);
     return reply;
   }
