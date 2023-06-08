@@ -29,7 +29,6 @@ let LinkedinService = exports.LinkedinService = class LinkedinService {
         const newMessage = `This is a strict requirement: The scope and domain of the jobs have to be limited to ${node} Domain.
 Using the information in your previous response and the data provided to you before, please categorize those job positions into relevant categories.
 Use one or more of the following criteria to categorize the job positions:
-logical and industrial domains, required skill sets, levels of responsibility, and similarities and characteristics.
 
 You have to give an output in the following JSON format:
 
@@ -63,7 +62,7 @@ This is a strict requirement: You need to generate only 4 different Categories.`
     }
     async getInitialNode(filename) {
         console.log(filename);
-        const resume = await axios_1.default.get(`https://3062-136-233-9-98.ngrok-free.app/converter/${filename}`);
+        const resume = await axios_1.default.get(`https://9696-136-233-9-98.ngrok-free.app/converter/${filename}`);
         const messages = [
             {
                 role: 'user',
@@ -86,6 +85,17 @@ This is a strict requirement: You need to list at least 15 different job positio
         await this.cacheManager.set(sessionId, messages);
         console.log((await this.cacheManager.get(sessionId))[0]);
         return { sessionId };
+    }
+    async getResources(getResourcesDto) {
+        const { start, end } = getResourcesDto;
+        const messages = [{
+                role: 'user',
+                content: `I am currently a ${start} but want to switch to a ${end} Role. What are some courses/resources links that i can use to learn the necessary skills to switch. Give me the course links in a json array format.
+      Example: 
+["link1", "link2", "link3"]`,
+            }];
+        const reply = await this.gptService.getGptResponse(messages);
+        return reply;
     }
 };
 exports.LinkedinService = LinkedinService = __decorate([

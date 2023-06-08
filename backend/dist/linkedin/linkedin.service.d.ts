@@ -1,6 +1,7 @@
 import { Cache } from 'cache-manager';
 import { GptService } from 'src/gpt/gpt.service';
 import { NewNodeDto } from './dto/newNode.dto';
+import { GetResourcesDto } from './dto/getResources.dto';
 export declare class LinkedinService {
     private cacheManager;
     private gptService;
@@ -9,4 +10,5 @@ export declare class LinkedinService {
     getInitialNode(filename: string): Promise<{
         sessionId: string;
     }>;
+    getResources(getResourcesDto: GetResourcesDto): Promise<string>;
 }

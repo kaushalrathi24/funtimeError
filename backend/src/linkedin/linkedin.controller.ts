@@ -9,6 +9,7 @@ import { LinkedinService } from './linkedin.service';
 import { NewNodeDto } from './dto/newNode.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { GetResourcesDto } from './dto/getResources.dto';
 
 @Controller('linkedin')
 export class LinkedinController {
@@ -33,5 +34,10 @@ export class LinkedinController {
   @Post('secondNodes')
   async getSecondNodes(@Body() newNodeDto: NewNodeDto) {
     return await this.linkedinService.generateSecondNodes(newNodeDto);
+  }
+
+  @Post('resources')
+  async getResources(@Body() getResourcesDto: GetResourcesDto) {
+    return await this.linkedinService.getResources(getResourcesDto);
   }
 }

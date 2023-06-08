@@ -6,7 +6,6 @@ import { LinkedinModule } from './linkedin/linkedin.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { ConfigModule } from '@nestjs/config';
 import { MulterModule } from '@nestjs/platform-express';
-
 @Module({
   imports: [
     GptModule,

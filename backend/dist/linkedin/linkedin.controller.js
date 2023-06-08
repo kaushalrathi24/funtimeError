@@ -18,6 +18,7 @@ const linkedin_service_1 = require("./linkedin.service");
 const newNode_dto_1 = require("./dto/newNode.dto");
 const platform_express_1 = require("@nestjs/platform-express");
 const multer_1 = require("multer");
+const getResources_dto_1 = require("./dto/getResources.dto");
 let LinkedinController = exports.LinkedinController = class LinkedinController {
     constructor(linkedinService) {
         this.linkedinService = linkedinService;
@@ -27,6 +28,9 @@ let LinkedinController = exports.LinkedinController = class LinkedinController {
     }
     async getSecondNodes(newNodeDto) {
         return await this.linkedinService.generateSecondNodes(newNodeDto);
+    }
+    async getResources(getResourcesDto) {
+        return await this.linkedinService.getResources(getResourcesDto);
     }
 };
 __decorate([
@@ -52,6 +56,13 @@ __decorate([
     __metadata("design:paramtypes", [newNode_dto_1.NewNodeDto]),
     __metadata("design:returntype", Promise)
 ], LinkedinController.prototype, "getSecondNodes", null);
+__decorate([
+    (0, common_1.Post)('resources'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [getResources_dto_1.GetResourcesDto]),
+    __metadata("design:returntype", Promise)
+], LinkedinController.prototype, "getResources", null);
 exports.LinkedinController = LinkedinController = __decorate([
     (0, common_1.Controller)('linkedin'),
     __metadata("design:paramtypes", [linkedin_service_1.LinkedinService])
