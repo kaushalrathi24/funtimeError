@@ -1,0 +1,64 @@
+Hello!
+I am going to provide you with a resume. 
+Can you please list a few sub-classifications that contain job roles that I can transition to, based on the skills and qualifications listed in my resume, such that fall under these 5 main classifications:
+
+Top Level Classification:
+Technical
+Managerial
+Creative Arts
+Research
+Humanatarian Sciences
+
+Find the name, and designation, and get the skills of the person from their resume.
+This is a strict requirement: DO NOT list any Job Roles or Professional Positions on their own. Each classification should be a category of its own.
+This is a strict requirement: DO NOT list any Job Roles or Professional Positions on their own. Each classification should be a category of its own.
+This is a strict requirement: DO NOT list any Job Roles or Professional Positions on their own. Each classification should be a category of its own.
+This is a strict requirement: The results must be based on the resume provided.
+Generate 15 sub-classifications each for the 5 main classification levels.
+
+Give me output in a JSON format
+
+```json
+{
+"name":"Name",
+"designation":"Designation",
+"skills": ["skill 1", "skill 2", "skill 3", ...],
+{
+"classification":"classification 1",
+"sub-classification":["sub-classification 1", "sub-classification 2", "sub-classification 3", ...]
+},
+{
+"classification":"classification 2",
+"sub-classification":["sub-classification 1", "sub-classification 2", "sub-classification 3", ...]
+},
+...
+}
+```
+
+-----------------------------------------------------------------------------------------
+
+
+List at least 3 to 5 Job roles that I can transition to in the < X > sub-category
+For each job role, give the list of skills needed to succeed at the job role
+
+Provide it in a JSON format
+
+```json
+{
+{
+"job":"role name",
+"skills":["skill 1", "skill 2", ...]
+},
+{
+"job":"role name",
+"skills":["skill 1", "skill 2", ...]
+},
+{
+"job":"role name",
+"skills":["skill 1", "skill 2", ...]
+},
+...
+}
+```
+
+-----------------------------------------------------------------------------------------
