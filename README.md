@@ -10,8 +10,8 @@ The project was made for the hackathon's `Track #2: QUALITY EDUCATION`
 
 ```
 The challenge at hand is to devise cutting-edge technological solutions leveraging data analytics,
-AI, personalized algorithms, real-time industry monitoring, networking platforms, skill assessment tools, a
-nd online learning resources to empower individuals in education and career transitions.
+AI, personalized algorithms, real-time industry monitoring, networking platforms, skill assessment 
+tools, and online learning resources to empower individuals in education and career transitions.
 These solutions should provide personalized career guidance, facilitate skill development,
 and bridge the gap between education and industry requirements.
 ```
