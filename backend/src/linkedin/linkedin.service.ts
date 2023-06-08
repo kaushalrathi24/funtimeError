@@ -104,7 +104,7 @@ This is a strict requirement: You need to list at least 15 different job positio
     const messages = [
       {
         role: 'user',
-        content: `I am currently a ${start}. I need to shift to a ${end} role in ${time} esourceweeks. Give me a timetable and checklist of what i should be learning by when.`,
+        content: `I am currently a ${start}. I need to shift to a ${end} role in ${time} weeks. Give me a timetable and checklist of what i should be learning by when.`,
       },
     ];
     return await this.gptService.getGptResponse(messages);
