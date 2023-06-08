@@ -58,7 +58,7 @@ This is a strict requirement: You need to generate only 4 different Categories.`
   async getInitialNode(filename: string) {
     console.log(filename);
     const resume = await axios.get(
-      `http://localhost:5000/converter/${filename}`,
+      `http://127.0.0.1:5000/converter/${filename}`,
     );
     const messages = [
       {
