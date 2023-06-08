@@ -67,7 +67,7 @@ function CareerGraph({ datam }) {
       >
         <Background />
         <Controls className="!m-12" />
-        <MiniMap nodeColor={'purple'} className="!m-12" zoomable pannable />
+        <MiniMap nodeColor={'#fd7615'} className="!m-12" zoomable pannable />
       </ReactFlow>
     </div>
   );

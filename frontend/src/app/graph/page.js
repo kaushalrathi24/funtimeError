@@ -13,6 +13,10 @@ import { useReactFlow } from 'reactflow';
 import { useRouter } from 'next/navigation';
 import axios from '../../scripts/axios.js';
 import { useOnSelectionChange } from 'reactflow';
+import bodymovin from 'bodymovin';
+import Image from 'next/image.js';
+import { toast } from 'react-toastify';
+import Link from 'next/link.js';
 
 // const data = {
 //   sessionId: '123',
@@ -63,9 +67,17 @@ import { useOnSelectionChange } from 'reactflow';
 // };
 
 export default function Home() {
+  // bodymovin.loadAnimation({
+  //   container: element, // the dom element that will contain the animation
+  //   renderer: 'svg',
+  //   loop: true,
+  //   autoplay: true,
+  //   path: 'loader_funtimeError.json', // the path to the animation json
+  // });
+
   let datatemp = {
     sessionId: '123',
-    title: 'Anirudh Mishra',
+    title: 'You',
     description: 'Student',
     nodes: [
       {
@@ -86,27 +98,88 @@ export default function Home() {
     ],
   };
   const [data, setData] = useState(datatemp);
+  const [dest, setDest] = useState('');
   const router = useRouter();
   const [currLevel, setCurrLevel] = useState(0);
-  const [currObj, setCurrObj] = useState(data);
+  const [currObj, setCurrObj] = useState(datatemp);
+
+  const [resourcesTime, setResourcesTime] = useState(false);
+  const [resources, setResources] = useState([]);
+
+  // const insertNodes = (dtemp, recnodes, nodeName) => {
+  //   console.log('inserting', dtemp, recnodes, nodeName);
+  //   for (let i = 0; i < dtemp.nodes.length; i++) {
+  //     if (dtemp.nodes[i].title === nodeName) {
+  //       dtemp.nodes[i].nodes = [...recnodes];
+  //       setData({ ...dtemp });
+  //       break;
+  //     } else {
+  //       insertNodes(dtemp.nodes[i], recnodes, nodeName);
+  //     }
+  //   }
+  // };
+
+  const insertNodes = (dtemp, recnodes, nodeName) => {
+    console.log('inserting', dtemp, recnodes, nodeName);
+    for (let i = 0; i < dtemp.nodes.length; i++) {
+      if (dtemp.nodes[i].title === nodeName) {
+        dtemp.nodes[i].nodes = [...recnodes];
+        setData({ ...dtemp });
+        break;
+      }
+    }
+  };
 
   const sendNode = async (nodeName) => {
-    try {
-      const res = await axios.post('/linkedin/secondNodes', {
-        node: nodeName,
-        sessionId: localStorage.getItem('sessionId'),
-      });
-      console.log(res);
-      for (let i = 0; i < data.nodes.length; i++) {
-        if (datatemp.nodes[i].title === nodeName) {
-          console.log(datatemp.nodes[i]);
-          datatemp.nodes[i].nodes = res.data.nodes;
-          datatemp.nodes[i].nodes = [...res.data.nodes];
-
-          setData({ ...datatemp });
-        }
+    setLoading(true);
+    if (!resourcesTime) {
+      try {
+        const res = await axios.post('/linkedin/secondNodes', {
+          node: nodeName,
+          sessionId: localStorage.getItem('sessionId'),
+        });
+        console.log(res);
+        datatemp.title = res.data.name;
+        datatemp.description = res.data.designation;
+        insertNodes(datatemp, res.data.nodes, nodeName);
+        datatemp = { ...datatemp };
+        setResourcesTime(true);
+      } catch (error) {
+        toast.error(error);
+        console.log(error);
+        sendNode(nodeName);
       }
-      datatemp = { ...datatemp };
+    } else {
+      try {
+        const res = await axios.post('/linkedin/resources', {
+          start: datatemp.description,
+          end: nodeName,
+        });
+        console.log('Resources:', res);
+        if (!Array.isArray(res.data)) {
+          throw Error('gpt did gpt thing');
+        }
+        setResources(res.data);
+        setSidebar(true);
+      } catch (error) {
+        toast.error(error);
+        console.log(error);
+        sendNode(nodeName);
+      }
+    }
+    setLoading(false);
+  };
+
+  const [timeline, setTimeline] = useState('');
+
+  const getTimeline = async (weeks) => {
+    try {
+      const res = await axios.post('/linkedin/timeline', {
+        start: datatemp.description,
+        end: dest,
+      });
+      console.log('Timeline: ', res);
+      setTimeline(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -123,7 +196,10 @@ export default function Home() {
     onChange: ({ nodes, edges }) => {
       console.log('changed selection', nodes, edges);
       if (nodes && nodes[0]) {
-        if (nodes[0].data) sendNode(nodes[0].data.label);
+        if (nodes[0].data) {
+          sendNode(nodes[0].data.label);
+          setDest(nodes[0].data.label);
+        }
       }
     },
   });
@@ -146,6 +222,10 @@ export default function Home() {
     //   const res = await axios.post("/")
     // }
   };
+
+  const [weeks, setWeeks] = useState(0);
+
+  const [loading, setLoading] = useState(false);
   return (
     <main className="flex min-h-screen flex-row items-center">
       <div
@@ -153,23 +233,34 @@ export default function Home() {
           !sidebar ? 'grow-[2]' : 'grow-[6]'
         } relative`}
       >
-        {sidebar && (
+        {(sidebar || loading) && (
           <div
             onClick={() => setSidebar(false)}
             className="w-full h-screen cursor-pointer bg-slate-400 opacity-70 absolute z-20"
           />
+        )}
+        {loading && (
+          <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-40">
+            <Image
+              className="animate-spin"
+              width={70}
+              height={70}
+              src={'/loader.png'}
+              alt="loader"
+            />
+          </div>
         )}
         {/* <CareerGraph datam={data} /> */}
         {comp}
         <BsArrowLeft
           onClick={() => router.push('/')}
           className="cursor-pointer absolute top-0 left-0 m-10"
-          size={44}
+          size={34}
         />
         <div className="absolute top-0 right-0 flex">
-          <MdReplay className="cursor-pointer m-10" size={44} />
-          <RxExit className="cursor-pointer mt-10 mr-10" size={40} />
-          <BsDownload className="cursor-pointer mt-10 mr-10" size={40} />
+          {/* <MdReplay className="cursor-pointer m-10" size={34} /> */}
+          <RxExit className="cursor-pointer mt-10 mr-10" size={30} />
+          <BsDownload className="cursor-pointer mt-10 mr-10" size={30} />
         </div>
       </div>
       <div
@@ -193,8 +284,39 @@ export default function Home() {
           } ${!sidebar && 'hover:bg-slate-300'}`}
         >
           {sidebar && (
-            <div className="w">
-              Looks like you haven't selected any node right now.
+            <div className="">
+              {!resources.length ? (
+                "Looks like you haven't selected any node right now."
+              ) : (
+                <div className="overflow-scroll">
+                  <p className="text-[#fd7615] text-lg mb-3 font-bold">
+                    {resources.length && 'Courses Suggested for your path.'}
+                  </p>
+                  {resources.map((resource, index) => {
+                    return (
+                      <Link target={'_blank'} className="block" href={resource}>
+                        {resource}
+                      </Link>
+                    );
+                  })}
+                  <p className="mt-10">
+                    How many weeks do you want to go through this path?
+                  </p>
+                  <input
+                    value={weeks}
+                    type={'number'}
+                    className="border border-black rounded-md"
+                    onChange={(e) => setWeeks(e.target.value)}
+                  />
+                  <p
+                    onClick={() => getTimeline(weeks)}
+                    className="text-[#fd7615] cursor-pointer"
+                  >
+                    Generate a plan for me.
+                  </p>
+                  <p className="mt-10"></p>
+                </div>
+              )}
             </div>
           )}
         </div>
