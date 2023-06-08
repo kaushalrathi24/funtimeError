@@ -7,6 +7,7 @@ import { NewNodeDto } from './dto/newNode.dto';
 import { MessageInterface } from 'src/gpt/interfaces';
 import axios from 'axios';
 import { GetResourcesDto } from './dto/getResources.dto';
+import { GetTimelineDto } from './dto/getTimeline.dto';
 
 @Injectable()
 export class LinkedinService {
@@ -96,5 +97,16 @@ This is a strict requirement: You need to list at least 15 different job positio
     ];
     const reply = await this.gptService.getGptResponse(messages);
     return reply;
+  }
+
+  async getTimeline(getTimelineDto: GetTimelineDto) {
+    const { start, end, time } = getTimelineDto;
+    const messages = [
+      {
+        role: 'user',
+        content: `I am currently a ${start}. I need to shift to a ${end} role in ${time} esourceweeks. Give me a timetable and checklist of what i should be learning by when.`,
+      },
+    ];
+    return await this.gptService.getGptResponse(messages);
   }
 }

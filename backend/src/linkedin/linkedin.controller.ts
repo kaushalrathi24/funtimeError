@@ -10,6 +10,7 @@ import { NewNodeDto } from './dto/newNode.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { GetResourcesDto } from './dto/getResources.dto';
+import { GetTimelineDto } from './dto/getTimeline.dto';
 
 @Controller('linkedin')
 export class LinkedinController {
@@ -39,5 +40,10 @@ export class LinkedinController {
   @Post('resources')
   async getResources(@Body() getResourcesDto: GetResourcesDto) {
     return await this.linkedinService.getResources(getResourcesDto);
+  }
+
+  @Post('timeline')
+  async getTimeline(@Body() getTimelineDto: GetTimelineDto) {
+    return await this.linkedinService.getTimeline(getTimelineDto);
   }
 }
