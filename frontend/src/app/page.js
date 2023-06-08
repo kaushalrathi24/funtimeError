@@ -5,6 +5,7 @@ import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { useState } from 'react';
 import axios from '../scripts/axios.js';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image.js';
 
 export default function Home() {
   const router = useRouter();
@@ -48,9 +49,13 @@ export default function Home() {
         className="cursor-pointer absolute top-0 right-0 m-10"
         size={44}
       />
-      <p className="absolute top-0 left-1/2 mt-10 text-2xl -translate-x-1/2">
-        Career Node
-      </p>
+      <Image
+        className="mt-7"
+        width={160}
+        height={100}
+        src={'/careerNode_alt.png'}
+        alt="logo"
+      />
       <div className="m-auto flex flex-col items-center">
         <input onChange={handleFileChange} type={'file'} />
         <AiOutlineCloudUpload

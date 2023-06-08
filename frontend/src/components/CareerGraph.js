@@ -12,26 +12,33 @@ import 'reactflow/dist/style.css';
 import { structureData } from '@/scripts/structureData';
 import CustomNode from './CustomNode';
 
-function CareerGraph({ data }) {
+function CareerGraph({ datam }) {
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
+  const [data, setData] = useState(datam);
+
+  console.log('DATA from GRAPH,', data, datam);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   const nodeTypes = useMemo(() => ({ customNode: CustomNode }), []);
 
   useEffect(() => {
     let n = [];
     let e = [];
-    structureData(data, null, null, n, e);
+    structureData(datam, null, null, n, e);
     n.push({
       id: 'node-1',
       type: 'customNode',
-      image: '/laptop.png',
-      position: { x: 50, y: -200 },
+      image: '/careerNode_alt.png',
+      position: { x: 25, y: -70 },
     });
     setNodes(n);
     setEdges(e);
     console.log(n, e);
-  }, []);
+  }, [datam]);
 
   const onNodesChange = useCallback(
     (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
@@ -60,7 +67,7 @@ function CareerGraph({ data }) {
       >
         <Background />
         <Controls className="!m-12" />
-        <MiniMap className="!m-12" zoomable pannable />
+        <MiniMap nodeColor={'purple'} className="!m-12" zoomable pannable />
       </ReactFlow>
     </div>
   );

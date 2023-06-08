@@ -8,60 +8,125 @@ import {
   BsFillArrowLeftCircleFill,
 } from 'react-icons/bs';
 import { RxExit } from 'react-icons/rx';
+import { MdReplay } from 'react-icons/md';
 import { useReactFlow } from 'reactflow';
 import { useRouter } from 'next/navigation';
 import axios from '../../scripts/axios.js';
+import { useOnSelectionChange } from 'reactflow';
 
-const data = {
-  sessionId: '123',
-  title: 'Anirudh Mishra',
-  description: 'Student',
-  nodes: [
-    {
-      title: 'Technical',
-      description: 'lorem',
-      nodes: [
-        {
-          title: 'Database Developer',
-          description: 'lorem',
-        },
-        {
-          title: 'Software Developer',
-          description: 'lorem',
-        },
-        {
-          title: 'Frontend Developer',
-          description: 'lorem',
-          nodes: [
-            {
-              title: 'Cross Platform',
-              description: 'lorem',
-            },
-            {
-              title: 'Frontend Security',
-              description: 'lorem',
-            },
-            {
-              title: 'Full Stack Developer',
-              description: 'lorem',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: 'Management',
-      description: 'lorem',
-    },
-    {
-      title: 'Analyst',
-      description: 'lorem',
-    },
-  ],
-};
+// const data = {
+//   sessionId: '123',
+//   title: 'Anirudh Mishra',
+//   description: 'Student',
+//   nodes: [
+//     {
+//       title: 'Technical',
+//       description: 'lorem',
+//       nodes: [
+//         {
+//           title: 'Database Developer',
+//           description: 'lorem',
+//         },
+//         {
+//           title: 'Software Developer',
+//           description: 'lorem',
+//         },
+//         {
+//           title: 'Frontend Developer',
+//           description: 'lorem',
+//           nodes: [
+//             {
+//               title: 'Cross Platform',
+//               description: 'lorem',
+//             },
+//             {
+//               title: 'Frontend Security',
+//               description: 'lorem',
+//             },
+//             {
+//               title: 'Full Stack Developer',
+//               description: 'lorem',
+//             },
+//           ],
+//         },
+//       ],
+//     },
+//     {
+//       title: 'Management',
+//       description: 'lorem',
+//     },
+//     {
+//       title: 'Analyst',
+//       description: 'lorem',
+//     },
+//   ],
+// };
 
 export default function Home() {
+  let datatemp = {
+    sessionId: '123',
+    title: 'Anirudh Mishra',
+    description: 'Student',
+    nodes: [
+      {
+        title: 'Technical',
+        description: 'lorem',
+        nodes: [],
+      },
+      {
+        title: 'Management',
+        description: 'lorem',
+        nodes: [],
+      },
+      {
+        title: 'Analyst',
+        description: 'lorem',
+        nodes: [],
+      },
+    ],
+  };
+  const [data, setData] = useState(datatemp);
   const router = useRouter();
+  const [currLevel, setCurrLevel] = useState(0);
+  const [currObj, setCurrObj] = useState(data);
+
+  const sendNode = async (nodeName) => {
+    try {
+      const res = await axios.post('/linkedin/secondNodes', {
+        node: nodeName,
+        sessionId: localStorage.getItem('sessionId'),
+      });
+      console.log(res);
+      for (let i = 0; i < data.nodes.length; i++) {
+        if (datatemp.nodes[i].title === nodeName) {
+          console.log(datatemp.nodes[i]);
+          datatemp.nodes[i].nodes = res.data.nodes;
+          datatemp.nodes[i].nodes = [...res.data.nodes];
+
+          setData({ ...datatemp });
+        }
+      }
+      datatemp = { ...datatemp };
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const [comp, setComp] = useState(<CareerGraph datam={data} />);
+
+  useEffect(() => {
+    console.log(data);
+    setComp(<CareerGraph datam={data} />);
+  }, [data]);
+
+  useOnSelectionChange({
+    onChange: ({ nodes, edges }) => {
+      console.log('changed selection', nodes, edges);
+      if (nodes && nodes[0]) {
+        if (nodes[0].data) sendNode(nodes[0].data.label);
+      }
+    },
+  });
 
   const reactFlowInstance = useReactFlow();
   const resizeObserver = new ResizeObserver((entries) => {
@@ -94,14 +159,16 @@ export default function Home() {
             className="w-full h-screen cursor-pointer bg-slate-400 opacity-70 absolute z-20"
           />
         )}
-        <CareerGraph data={data} />
+        {/* <CareerGraph datam={data} /> */}
+        {comp}
         <BsArrowLeft
           onClick={() => router.push('/')}
           className="cursor-pointer absolute top-0 left-0 m-10"
           size={44}
         />
         <div className="absolute top-0 right-0 flex">
-          <RxExit className="cursor-pointer m-10" size={40} />
+          <MdReplay className="cursor-pointer m-10" size={44} />
+          <RxExit className="cursor-pointer mt-10 mr-10" size={40} />
           <BsDownload className="cursor-pointer mt-10 mr-10" size={40} />
         </div>
       </div>
