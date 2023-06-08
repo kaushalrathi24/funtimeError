@@ -47,7 +47,8 @@ export default function Home() {
         },
       });
       console.log(res);
-      window.localStorage.setItem('sessionId', res.data.sessionId);
+      if (typeof window !== 'undefined')
+        window.localStorage.setItem('sessionId', res.data.sessionId);
       router.push('/graph');
     } catch (error) {
       console.log(error);
@@ -58,7 +59,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
 
   return (
-    <main className="flex bg-white flex-col items-center h-screen">
+    <main className="flex gradient-background flex-col items-center h-screen">
       <div className="flex w-screen p-10 flex-row justify-between items-center">
         <Image
           width={100}
@@ -74,7 +75,7 @@ export default function Home() {
         </div>
       </div>
       <div className="absolute bottom-0"></div>
-      <div className="m-auto flex flex-col bg-white shadow-md shadow-slate-600 p-10 rounded-lg items-center">
+      <div className="m-auto flex flex-col bg-white p-10 rounded-lg items-center">
         <label for="file" class="drop-container">
           <span class="drop-title">Drop files here</span>
           or
