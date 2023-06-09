@@ -6,7 +6,6 @@ storage_dir = r"/root/funtimeError/backend/upload"
 def pdf2txt(filename):
     # importing required modules
     
-    
     file = rf"{storage_dir}/{filename}"
     # creating a pdf reader object
     reader = PdfReader(file)
